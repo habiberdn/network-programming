@@ -13,12 +13,12 @@ int main() {
 
   printf("Configuring local address...\n");
   struct addrinfo hints;
-  memset(&hints, 0, sizeof(hints));
+  memset(&hints, 0, sizeof(hints)); // fill a block of memory with a particular value, means set all characters    memory address of hints to 0
   hints.ai_family = AF_INET;
   hints.ai_socktype = SOCK_STREAM;
   hints.ai_flags = AI_PASSIVE;
   struct addrinfo *bind_address;
-  getaddrinfo(0, "8080", &hints, &bind_address);
+  getaddrinfo(0, "8080", &hints, &bind_address); //bind_address containing an address that the caller can use.     must call freeaddrinfo when done
   printf("Creating socket...\n");
   SOCKET socket_listen;
 

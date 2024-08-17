@@ -12,7 +12,6 @@ int main(int argc, char *argv[]) { //contains number of argument and store all a
     return 1;
   }
 #endif
-  printf("%d ", argv);
   if (argc < 3) {
     fprintf(stderr, "usage: tcp_client hostname port\n");
     return 1;
@@ -69,7 +68,7 @@ int main(int argc, char *argv[]) { //contains number of argument and store all a
     struct timeval timeout;
     timeout.tv_sec = 0;
     timeout.tv_usec = 100000; //microsecond
-    if (select(socket_peer+1, &reads, 0, 0, &timeout) < 0) {
+    if (select(socket_peer+1, &reads, 0, 0, &timeout) < 0) { 
 
       fprintf(stderr, "select() failed. (%d)\n", GETSOCKETERRNO());
       return 1;
