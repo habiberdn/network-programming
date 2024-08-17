@@ -34,13 +34,13 @@ int main() {
   char read[1024];
   int bytes_received =
       recvfrom(socket_listen, read, 1024, 0, (struct sockaddr *)&client_address,
-               &client_len);
+               &client_len); // listening incoming data 
 
   printf("Received (%d bytes): %.*s\n", bytes_received, bytes_received, read);
   printf("Remote address is: ");
   char address_buffer[100];
   char service_buffer[100];
-  getnameinfo(((struct sockaddr *)&client_address), client_len, address_buffer,
+  getnameinfo(((struct sockaddr *)&client_address), client_len, address_buffer, //print sender address and port 
               sizeof(address_buffer), service_buffer, sizeof(service_buffer),
               NI_NUMERICHOST | NI_NUMERICSERV);
   //(NI_NUMERICHOST | NI_NUMERICSERV) tells getnameinfo() that we want both the
