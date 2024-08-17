@@ -4,7 +4,7 @@
 #include <conio.h>
 #endif
 
-int main(int argc, char *argv[]) {
+int main(int argc, char *argv[]) { //contains number of argument and store all argument 
 #if defined(_WIN32)
   WSADATA d;
   if (WSAStartup(MAKEWORD(2, 2), &d)) {
@@ -12,7 +12,7 @@ int main(int argc, char *argv[]) {
     return 1;
   }
 #endif
-
+  printf("%d ", argv);
   if (argc < 3) {
     fprintf(stderr, "usage: tcp_client hostname port\n");
     return 1;
@@ -54,28 +54,28 @@ int main(int argc, char *argv[]) {
 
     return 1;
   }
-  freeaddrinfo(peer_address);
+  freeaddrinfo(peer_address); //free memory for peer_address
 
   printf("Connected.\n");
   printf("To send data, enter text followed by enter.\n");
 
   while(1) {
-    fd_set reads; //set of file descriptors that you want to monitor for readiness to perform I/O operations
-    FD_ZERO(&reads); //it sets all file descriptors in the set to "not included" status
-    FD_SET(socket_peer, &reads);
+    fd_set reads; // fd_set is a file descriptor 
+    FD_ZERO(&reads); // initiate sets all file descriptors in the set to "not included" status
+    FD_SET(socket_peer, &reads); //adds the specific file descriptor socket_peer to the set, so it will be monitored for readiness in a select call.
 #if !defined(_WIN32)
     FD_SET(0, &reads);
 #endif
     struct timeval timeout;
     timeout.tv_sec = 0;
-    timeout.tv_usec = 100000;
+    timeout.tv_usec = 100000; //microsecond
     if (select(socket_peer+1, &reads, 0, 0, &timeout) < 0) {
 
       fprintf(stderr, "select() failed. (%d)\n", GETSOCKETERRNO());
       return 1;
     }
 
-    if (FD_ISSET(socket_peer, &reads)) {
+    if (FD_ISSET(socket_peer, &reads)) { //Memeriksa apakah file descriptor fd ada dalam set
       char read[4096];
       int bytes_received = recv(socket_peer, read, 4096, 0);
       if (bytes_received < 1) {
@@ -83,7 +83,7 @@ int main(int argc, char *argv[]) {
         break;
       }
       printf("Received (%d bytes): %.*s",
-             bytes_received, bytes_received, read);
+             bytes_received, bytes_received, read); //prints a string of a specified length.
     }
 
 #if defined(_WIN32)
@@ -107,3 +107,4 @@ int main(int argc, char *argv[]) {
     printf("Finished.\n");
     return 0;
   }
+
