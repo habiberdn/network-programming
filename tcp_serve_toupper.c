@@ -81,7 +81,7 @@ int main() {
                       NI_NUMERICHOST);
           printf("New connection from %s\n", address_buffer);
         } else {
-          char read[1024];
+          char read[1024]; 
           int bytes_received = recv(i, read, 1024, 0);
           if (bytes_received < 1) {
             FD_CLR(i, &master);
